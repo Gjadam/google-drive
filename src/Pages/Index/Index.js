@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, ButtonGroup, Container, Dropdown } from 'react-bootstrap'
+import './Index.css'
+import { ButtonGroup, Container, Dropdown } from 'react-bootstrap'
 import { HiPlus } from "react-icons/hi";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import NavBar from '../../Components/Templates/NavBar/NavBar'
@@ -9,6 +10,8 @@ export default function Index() {
   return (
     <Container>
       <NavBar />
+      {/* Two Element in right and left side with fixed position */}
+      <span className='index-style d-none d-xl-block  '></span>
       {/* Start Add Drive */}
       <div className="d-flex align-items-center mt-5">
         <h1 className=' fw-bold '>My Drive</h1>
@@ -34,6 +37,7 @@ export default function Index() {
       </div>
       {/* End File Boxes */}
       <SectionHeader title="All Files" />
+
     </Container>
   )
 }
