@@ -11,7 +11,7 @@ export default function Index() {
     <Container>
       <NavBar />
       {/* Two Element in right and left side with fixed position */}
-      <span className='index-style d-none d-xl-block  '></span>
+      <span className='index-style d-none d-xxl-block  '></span>
       {/* Start Add Drive */}
       <div className="d-flex align-items-center mt-5">
         <h1 className=' fw-bold '>My Drive</h1>
