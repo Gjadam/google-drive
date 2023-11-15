@@ -1,0 +1,8 @@
+.file-box__size {
+    width: 18rem;
+    height: 10rem;
+    background-color: rgb(248, 249, 250);
+}
+.file-box-image {
+    width: 6rem;
+}
