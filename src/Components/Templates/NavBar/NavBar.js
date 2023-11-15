@@ -8,13 +8,13 @@ export default function NavBar() {
         <div className="">
           <img src="/images/svgs/logo.svg" alt="asdad" />
         </div>
-        <div className="d-md-flex d-none ">
+        <form className="d-md-flex d-none ">
           <Form.Control
             type="search"
             placeholder="Search Drive"
             className="mr-sm-2 rounded-5 search-box-width py-2 "
           />
-        </div>
+        </form>
         <div className="d-flex align-items-center ">
           <h6 className='m-2'>TheGjad</h6>
           <Image src="/images/user-image/user.jpg" className='user-image' alt="user-image" roundedCircle />
