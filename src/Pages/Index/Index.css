@@ -23,3 +23,7 @@
     top: 0;
     border-bottom-left-radius: 5rem;
 }
+
+td {
+    min-width: 15rem;
+}
