@@ -1,0 +1,15 @@
+.landing__header-arrow {
+    position: absolute;
+    bottom: -4rem;
+
+}
+.landing__image-height {
+    width: 30rem;
+}
+
+.footer__bg-image {
+    height: 30vh;
+    background: url('/public/images/jpg/github.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+}
