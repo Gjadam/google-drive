@@ -3,15 +3,17 @@ import './Index.css'
 import { ButtonGroup, Container, Dropdown, Table } from 'react-bootstrap'
 import { HiPlus } from "react-icons/hi";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-import NavBar from '../../Components/Templates/NavBar/NavBar'
 import SectionHeader from '../../Components/Modules/SectionHeader/SectionHeader';
 import FileBox from '../../Components/Modules/FileBox/FileBox';
 import { Link } from 'react-router-dom';
 import { AiFillEye } from "react-icons/ai";
+import NavBar from '../../Components/Templates/NavBar/NavBar';
+import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
 export default function Index() {
   return (
     <Container>
-
+      <NavBar />
+      <PageStyle />
       {/* Start Add Drive */}
       <div className="d-flex align-items-center mt-5">
         <h1 className=' fw-bold '>My Drive</h1>
