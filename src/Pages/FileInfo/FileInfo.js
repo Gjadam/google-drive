@@ -1,9 +1,13 @@
 import React from 'react'
 import { Button, Card, Container, Image } from 'react-bootstrap'
 import './FileInfo.css'
+import NavBar from '../../Components/Templates/NavBar/NavBar'
+import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
 export default function FileInfo() {
     return (
         <Container >
+            <NavBar />
+            <PageStyle />
             <Card className=' my-5 '>
                 <Card.Img variant="top" className='card-mage__height' src="/images/svgs/logo.svg" />
                 <Card.Body>
