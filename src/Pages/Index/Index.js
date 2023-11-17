@@ -6,12 +6,12 @@ import { MdOutlineCreateNewFolder } from "react-icons/md";
 import NavBar from '../../Components/Templates/NavBar/NavBar'
 import SectionHeader from '../../Components/Modules/SectionHeader/SectionHeader';
 import FileBox from '../../Components/Modules/FileBox/FileBox';
+import { Link } from 'react-router-dom';
+import { AiFillEye } from "react-icons/ai";
 export default function Index() {
   return (
     <Container>
-      <NavBar />
-      {/* Two Element in right and left side with fixed position */}
-      <span className='index-style d-none d-xxl-block  '></span>
+
       {/* Start Add Drive */}
       <div className="d-flex align-items-center mt-5">
         <h1 className=' fw-bold '>My Drive</h1>
@@ -30,22 +30,32 @@ export default function Index() {
       <SectionHeader title="Recent Files" />
       {/* Start Recent Files */}
       <div className=" d-flex justify-content-around align-items-centerf flex-wrap gap-3 mt-4  ">
-        <FileBox />
-        <FileBox />
-        <FileBox />
-        <FileBox />
+        <Link to="/file-info/1" className='text-decoration-none '>
+          <FileBox />
+        </Link>
+        <Link to="/file-info/1" className='text-decoration-none '>
+          <FileBox />
+        </Link>
+        <Link to="/file-info/1" className='text-decoration-none '>
+          <FileBox />
+        </Link>
+        <Link to="/file-info/1" className='text-decoration-none '>
+          <FileBox />
+        </Link>
+
       </div>
       {/* End Recent Files */}
       <SectionHeader title="All Files" />
       {/* Start All Files  */}
       <div>
-        <Table responsive className='table-borderless'>
+        <Table borderless responsive hover>
           <thead>
             <tr >
               <th className='text-black-50'>Name</th>
               <th className='text-black-50'>Last Modified</th>
               <th className='text-black-50'>Size</th>
               <th className='text-black-50'>Type</th>
+              <th className='text-black-50'>View</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +67,11 @@ export default function Index() {
               <td>Table cell</td>
               <td>Table cell</td>
               <td>Table cell</td>
-
+              <td>
+                <Link to="/file-info/1">
+                  <AiFillEye className=' fs-4 ' />
+                </Link>
+              </td>
             </tr>
             <tr>
               <td>
@@ -67,6 +81,11 @@ export default function Index() {
               <td>Table cell</td>
               <td>Table cell</td>
               <td>Table cell</td>
+              <td>
+                <Link to="/file-info/1">
+                  <AiFillEye className=' fs-4 ' />
+                </Link>
+              </td>
             </tr>
             <tr>
               <td>
@@ -76,6 +95,25 @@ export default function Index() {
               <td>Table cell</td>
               <td>Table cell</td>
               <td>Table cell</td>
+              <td>
+                <Link to="/file-info/1">
+                  <AiFillEye className=' fs-4 ' />
+                </Link>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src="/images/png/pdf-icon.png" alt="icon" />
+                <span className=' ms-2 '>pdf file test</span>
+              </td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>
+                <Link to="/file-info/1">
+                  <AiFillEye className=' fs-4 ' />
+                </Link>
+              </td>
             </tr>
           </tbody>
         </Table>
