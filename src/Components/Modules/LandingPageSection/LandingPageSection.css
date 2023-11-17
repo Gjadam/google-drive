@@ -1,0 +1,15 @@
+.landing-page-section__title,
+.landing-page-section__text {
+    min-width: 20rem;
+    max-width: 30rem;
+}
+
+.landing__image-height {
+    max-width: 20rem;
+}
+
+@media screen and (min-width: 768px) {
+    .landing__image-height {
+        max-width: 45rem;
+    }
+}
