@@ -32,11 +32,11 @@ export default function LandingPage() {
                 <h3 className=' text-white fw-bold '>Our GitHub links</h3>
                 <div className=" d-flex ">
                     <a href="https://github.com/Gjadam" className=' me-2  link-offset-2 '>Gjadam </a>
-                    <a href="" className=' link-offset-2 '>AliRahmani</a>
+                    <a href="https://github.com/alirahmnicode" className=' link-offset-2 '>AliRahmaniCode</a>
                 </div>
             </div>
             <div className=" bg-black text-center text-white  p-3  ">
-                <h6> &copy; 2023 Created By <span className='fw-bold '>TheGjad</span> & <span className='fw-bold'>AliRahmani</span></h6>
+                <h6> &copy; 2023 Created By <span className='fw-bold '>TheGjad</span> & <span className='fw-bold'>AliRahmaniCode</span></h6>
             </div>
 
         </>
