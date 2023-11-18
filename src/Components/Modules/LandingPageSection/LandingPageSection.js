@@ -1,9 +1,8 @@
 import React from 'react'
 import './LandingPageSection.css'
-import { Container } from 'react-bootstrap'
 export default function LandingPageSection({title, text, image, dir}) {
   return (
-    <div className={`${dir === 'reverse' ? 'flex-row-reverse ' : 'flex-row'} row  d-flex justify-content-center align-items-center flex-wrap  mt-5 m-auto `}>
+    <div className={`${dir === 'reverse' ? 'flex-row-reverse ' : 'flex-row'} row  d-flex justify-content-center align-items-center flex-wrap  mt-5 m-auto `} data-aos="fade-up">
         <div className="col d-flex mb-4  mb-sm-0   ">
             <img src={image} alt="image" className='landing__image-height m-auto' />
         </div>
