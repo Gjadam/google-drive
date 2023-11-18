@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Container, Form, Image, Nav, NavDropdown, Navbar, Offcanvas } from 'react-bootstrap'
 import { FaCircleUser } from "react-icons/fa6";
 import './NavBar.css'
+import AuthContext from '../../../context/authContext';
 export default function NavBar() {
+
+  const authContext = useContext(AuthContext)
+
   return (
     <>
       {['lg'].map((expand) => (
@@ -37,7 +41,7 @@ export default function NavBar() {
                 </Form>
                 </Nav>
                 <div className="d-flex align-items-center mt-lg-0 mt-1  ">
-                  <h6 className='m-2'>TheGjad</h6>
+                  <h6 className='m-2'>{authContext.userInfos.username}</h6>
                   <FaCircleUser className=' text-primary fs-1 '/>
                 </div>
               </Offcanvas.Body>
