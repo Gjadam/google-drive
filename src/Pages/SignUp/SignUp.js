@@ -1,26 +1,54 @@
-import React from 'react'
-import { Container, FloatingLabel, Form, Image, Button } from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { Container, FloatingLabel, Form, Button } from 'react-bootstrap'
 import './SignUp.css'
 import { RiLoginCircleLine } from "react-icons/ri";
 import { useFormik } from 'formik';
+import Swal from 'sweetalert2';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/authContext'
 export default function SignUp() {
+
+    const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const form = useFormik({
         initialValues: { username: '', password: '' },
-        onSubmit: (values) => {
+        onSubmit: (values, {setSubmitting}) => {
+            setTimeout(() => {
+                setSubmitting(false)
+            }, 2000)
 
             const newUserInfo = {
-                username: values.username,
                 password: values.password,
+                username: values.username,
             }
-            fetch(`http://fastdrive.pythonanywhere.com/users/signup/`, {
+            fetch(`http://fastdrive.pythonanywhere.com/api/users/signup/`, {
                 method: "POST",
                 headers: {
                     "Content-Type" : "application/json",
                 },
                 body: JSON.stringify(newUserInfo)
             })
-            .then(res => console.log(res))
+            .then(res => {
+                if(res.ok) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "You have successfully registered",
+                        text: "Go to Drive",
+                    }).then(() => {
+                        navigate('/fast-drive')
+                    })
+                    return res.json()
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Something went wrong!",
+                        text: "Try again"
+                    })
+                }
+            }).then(result => {
+                authContext.login(result.token)
+            })
         },
         validate: (values) => {
             const errors = {}
@@ -51,7 +79,7 @@ export default function SignUp() {
                         <form className=' mt-4 ' onSubmit={form.handleSubmit}>
                             <FloatingLabel
                                 controlId="floatingInput"
-                                label="Email address"
+                                label="User Name"
                                 className="mb-3"
                             >
                                 <Form.Control type="text" name='username' aria-describedby="passwordHelpBlock" value={form.values.username} onChange={form.handleChange} onBlur={form.handleBlur} placeholder="Username" required />
@@ -62,6 +90,8 @@ export default function SignUp() {
                                 {form.errors.password && form.touched.password && <Form.Text className=' ms-1 ' id="passwordHelpBlock" muted>{form.errors.password}</Form.Text>}
                             </FloatingLabel>
                             <Button type='Submit' className=' mt-2 w-100 ' disabled={form.isSubmitting} >SignUp <RiLoginCircleLine className=' fs-4 ' /></Button>
+                            <span className=' text-center d-flex justify-content-center mt-5 text-black-50 '>Already have an account? <Link to="/login" className=' ms-1 '> Log in</Link></span>
+
                         </form>
                     </div>
                     <div className="signup__image col col-xl-7 bg-primary  d-none d-lg-flex justify-content-center align-items-center  ">
