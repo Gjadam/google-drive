@@ -2,7 +2,43 @@ import React from 'react'
 import { Container, FloatingLabel, Form, Image, Button } from 'react-bootstrap'
 import './SignUp.css'
 import { RiLoginCircleLine } from "react-icons/ri";
+import { useFormik } from 'formik';
 export default function SignUp() {
+
+    const form = useFormik({
+        initialValues: { username: '', password: '' },
+        onSubmit: (values) => {
+
+            const newUserInfo = {
+                username: values.username,
+                password: values.password,
+            }
+            fetch(`http://fastdrive.pythonanywhere.com/users/signup/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+                body: JSON.stringify(newUserInfo)
+            })
+            .then(res => console.log(res))
+        },
+        validate: (values) => {
+            const errors = {}
+            if (values.username === '') {
+                errors.username = 'Username is required!'
+            } else if (values.username.length < 4) {
+                errors.username = 'Username must be at least 4 characters long!'
+            }
+
+            if (values.password === '') {
+                errors.password = 'Password is required!'
+            } else if (values.password.length < 8) {
+                errors.password = 'Password must be at least 8 characters long!'
+            }
+            return errors
+        }
+    })
+
     return (
         <div className=" bg-primary  d-flex justify-content-center align-items-center " style={{ height: "100vh" }}>
             <Container>
@@ -12,21 +48,23 @@ export default function SignUp() {
                         <img src="/images/svgs/logo.svg" alt="logo" />
                         <h2 className=' fw-bold mt-2 '>Create your Account</h2>
                         <h6 className=' text-black-50 lh-base '>Sign up now and unlock a world of possibilities. Let's get started on this exciting journey together!</h6>
-                        <form className=' mt-4 '>
+                        <form className=' mt-4 ' onSubmit={form.handleSubmit}>
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label="Email address"
                                 className="mb-3"
                             >
-                                <Form.Control type="email" placeholder="name@example.com" />
+                                <Form.Control type="text" name='username' aria-describedby="passwordHelpBlock" value={form.values.username} onChange={form.handleChange} onBlur={form.handleBlur} placeholder="Username" required />
+                                {form.errors.username && form.touched.username && <Form.Text className=' ms-1 ' id="passwordHelpBlock" muted>{form.errors.username}</Form.Text>}
                             </FloatingLabel>
                             <FloatingLabel controlId="floatingPassword" label="Password">
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control type="password" name='password' value={form.values.password} onChange={form.handleChange} onBlur={form.handleBlur} placeholder="Password" required />
+                                {form.errors.password && form.touched.password && <Form.Text className=' ms-1 ' id="passwordHelpBlock" muted>{form.errors.password}</Form.Text>}
                             </FloatingLabel>
-                            <Button className=' mt-2 w-100 '>SignUp <RiLoginCircleLine className=' fs-4 ' /></Button>
+                            <Button type='Submit' className=' mt-2 w-100 ' disabled={form.isSubmitting} >SignUp <RiLoginCircleLine className=' fs-4 ' /></Button>
                         </form>
                     </div>
-                    <div className="signup__image col col-xl-7  d-none d-lg-flex justify-content-center align-items-center  ">
+                    <div className="signup__image col col-xl-7 bg-primary  d-none d-lg-flex justify-content-center align-items-center  ">
 
                     </div>
                 </div>

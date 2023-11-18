@@ -6,8 +6,6 @@
     background: url('/public/images/jpg/signup.jpg') no-repeat;
     background-size: cover;
     background-position: center;
-    border-top-right-radius: 1.8rem;
-    border-bottom-right-radius: 1.8rem;
 }
 
 .signup__style-image {
