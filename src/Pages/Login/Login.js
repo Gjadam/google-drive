@@ -76,7 +76,7 @@ export default function Login() {
 
                     </div>
                     <div className="col p-4  ">
-
+                    <img src="/images/png/signup-style.png" className='signup__style-image d-sm-none ' alt="image" />
                         <img src="/images/svgs/logo.svg" alt="logo" />
                         <h2 className=' fw-bold mt-2 '>Login to your Account</h2>
                         <h6 className=' text-black-50 lh-base '>Welcome to Fast Drive! Please enter your login credentials to access your account.</h6>
