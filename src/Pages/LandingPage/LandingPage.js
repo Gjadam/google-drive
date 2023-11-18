@@ -9,15 +9,15 @@ export default function LandingPage() {
         <>
             <div className=" bg-primary rounded-bottom-5 p-5  ">
                 <Container >
-                    <div className=' d-flex justify-content-center align-items-center flex-column  text-white  text-center  ' >
+                    <div className=' d-flex justify-content-center align-items-center flex-column  text-white  text-center  ' data-aos="fade-up" data-aos-duration="1500">
                         <img src="/images/svgs/logo.svg" className='landing__image-height rounded mb-2 ' alt="image" />
                         <h1 className=' fw-bold '>Easy and secure access to your content</h1>
                         <h5 className=' my-3 '>Store, share, and collaborate on files and folders from your mobile device, tablet, or computer Try Drive for Work </h5>
                         <div className=" d-flex justify-content-center align-items-center gap-3 ">
                             <Link to="/sign-up">
-                                <Button className=' rounded-5 px-5 ' variant='light' size='lg'>Sign up</Button>
+                                <Button className=' rounded-5 px-4 ' variant='light' size='lg'>Sign up</Button>
                             </Link>
-                            <Button className=' rounded-5 px-5 ' variant='outline-light' size='lg'>Log in</Button>
+                            <Button className=' rounded-5 px-4 ' variant='outline-light' size='lg'>Log in</Button>
                         </div>
                     </div>
                 </Container>
