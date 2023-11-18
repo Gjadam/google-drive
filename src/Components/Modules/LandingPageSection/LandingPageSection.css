@@ -4,12 +4,12 @@
     max-width: 30rem;
 }
 
-.landing__image-height {
-    max-width: 20rem;
+.landing__image-section-height {
+    max-width: 25rem;
 }
 
 @media screen and (min-width: 768px) {
-    .landing__image-height {
+    .landing__image-section-height {
         max-width: 45rem;
     }
 }
