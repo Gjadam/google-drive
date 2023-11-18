@@ -17,9 +17,9 @@ export default function Index() {
       {/* Start Add Drive */}
       <div className="d-flex align-items-center mt-5">
         <h1 className=' fw-bold '>My Drive</h1>
-        <form className='ms-3 mb-1  ' method="POST" enctype="multipart/form-data">
+        <form className='ms-3 mb-1  ' method="POST" encType="multipart/form-data">
           <Dropdown as={ButtonGroup}>
-            <label for="files" className='btn btn-primary d-flex align-items-center  '><HiPlus /></label>
+            <label htmlFor="files" className='btn btn-primary d-flex align-items-center  '><HiPlus /></label>
             <input id="files" className='d-none' type="file" />
             <Dropdown.Toggle split id="dropdown-custom-2" />
             <Dropdown.Menu >
