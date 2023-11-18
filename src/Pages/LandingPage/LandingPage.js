@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './LandingPage.css'
-
+import AuthContext from '../../context/authContext';
 import { Button, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import LandingPageSection from '../../Components/Modules/LandingPageSection/LandingPageSection';
 export default function LandingPage() {
+
+    const authContext = useContext(AuthContext)
+
     return (
         <>
             <div className=" bg-primary rounded-bottom-5 p-5  ">
@@ -14,10 +17,23 @@ export default function LandingPage() {
                         <h1 className=' fw-bold '>Easy and secure access to your content</h1>
                         <h5 className=' my-3 '>Store, share, and collaborate on files and folders from your mobile device, tablet, or computer Try Drive for Work </h5>
                         <div className=" d-flex justify-content-center align-items-center gap-3 ">
-                            <Link to="/sign-up">
-                                <Button className=' rounded-5 px-4 ' variant='light' size='lg'>Sign up</Button>
-                            </Link>
-                            <Button className=' rounded-5 px-4 ' variant='outline-light' size='lg'>Log in</Button>
+                            {
+                                authContext.isLoggedIn ? (
+                                    <Link to="/fast-drive">
+                                        <Button className=' rounded-5 px-4 ' variant='light' size='lg'>Go to Drive</Button>
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <Link to="/sign-up">
+                                            <Button className=' rounded-5 px-4 ' variant='light' size='lg'>Sign up</Button>
+                                        </Link>
+                                        <Link to="/login">
+                                            <Button className=' rounded-5 px-4 ' variant='outline-light' size='lg'>Log in</Button>
+                                        </Link>
+
+                                    </>
+                                )
+                            }
                         </div>
                     </div>
                 </Container>
