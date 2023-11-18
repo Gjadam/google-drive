@@ -1,6 +1,6 @@
 
 .landing__image-height {
-    width: 30rem;
+    width: 20rem;
 }
 
 .footer__bg-image {
@@ -8,4 +8,10 @@
     background: url('/public/images/jpg/github.jpg') no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+@media screen and (min-width: 768px) {
+    .landing__image-height {
+        width: 30rem;
+    }
 }
