@@ -4,7 +4,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import './NavBar.css'
 import AuthContext from '../../../context/authContext';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export default function NavBar() {
 
   const authContext = useContext(AuthContext)
@@ -35,10 +35,10 @@ export default function NavBar() {
     <>
       <Navbar expand="lg" className=" bg-white ">
         <Container>
-          <Navbar.Brand href="#home">
-            <div className="">
+          <Navbar.Brand>
+            <Link to="/fast-drive">
               <img src="/images/svgs/logo.svg" alt="logo" />
-            </div>
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
