@@ -41,7 +41,7 @@ export default function NavBar() {
                 </Form>
                 </Nav>
                 <div className="d-flex align-items-center mt-lg-0 mt-1  ">
-                  <h6 className='m-2'>{authContext.userInfos.username}</h6>
+                  <h6 className='m-2 fw-bold '>{authContext.userInfos.username}</h6>
                   <FaCircleUser className=' text-primary fs-1 '/>
                 </div>
               </Offcanvas.Body>
