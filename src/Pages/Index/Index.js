@@ -9,7 +9,34 @@ import { Link } from 'react-router-dom';
 import { AiFillEye } from "react-icons/ai";
 import NavBar from '../../Components/Templates/NavBar/NavBar';
 import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
+import Swal from 'sweetalert2';
 export default function Index() {
+
+  
+  
+  const addNewFolder = async  () => {
+    const { value: folderName } = await Swal.fire({
+      title: "Add new folder",
+      input: "text",
+      inputLabel: "Please enter a name:",
+      inputPlaceholder: "Enter your folder name"
+    });
+    if(folderName) {
+      const localStorageData = JSON.parse(localStorage.getItem("user"))
+      fetch(`http://fastdrive.pythonanywhere.com/api/folders/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Token ${localStorageData.token}`
+        },
+        body: JSON.stringify({
+          title: folderName
+        })
+      }).then(res => console.log(res))
+    }
+  }
+
+
   return (
     <Container>
       <NavBar />
@@ -23,7 +50,7 @@ export default function Index() {
             <input id="files" className='d-none' type="file" />
             <Dropdown.Toggle split id="dropdown-custom-2" />
             <Dropdown.Menu >
-              <Dropdown.Item eventKey="1" className=' d-flex justify-content-center align-items-center '><MdOutlineCreateNewFolder className=' me-1 ' />New Folder</Dropdown.Item>
+              <Dropdown.Item eventKey="1" className=' d-flex justify-content-center align-items-center' onClick={addNewFolder}><MdOutlineCreateNewFolder className=' me-1 ' />New Folder</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </form>
