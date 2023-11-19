@@ -1,6 +1,9 @@
-
 .landing__image-height {
-    width: 20rem;
+    width: 23rem;
+}
+
+.slider-image__width {
+    width: 5rem;
 }
 
 .footer__bg-image {
@@ -10,8 +13,37 @@
     background-position: center;
 }
 
+
+.image-style-1,
+.image-style-2 {
+    position: absolute;
+    z-index: 3;
+    opacity: 0.3;
+}
+
+.image-style-1 {
+    bottom: 30rem;
+    left: -3.5rem;
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+}
+
+.image-style-2 {
+    top: 30rem;
+    right: -3.5rem;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+}
+
+
 @media screen and (min-width: 768px) {
     .landing__image-height {
-        width: 30rem;
+        width: 55rem;
     }
 }
