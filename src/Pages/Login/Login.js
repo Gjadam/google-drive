@@ -30,10 +30,20 @@ export default function Login() {
             })
                 .then(res => {
                     if (res.ok) {
-                        Swal.fire({
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
                             icon: "success",
-                            title: "You have successfully logged in",
-                            text: "Go to Drive",
+                            title: "logged in successfully"
                         }).then(() => {
                             navigate('/fast-drive')
                         })
