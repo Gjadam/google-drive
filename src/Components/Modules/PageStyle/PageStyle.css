@@ -5,21 +5,23 @@
 .index-style::before {
     content: "";
     height: 90vh;
-    width: 3.5rem;
+    width: 2.5rem;
     background-color: rgb(13, 110, 253);
     position: fixed;
     left: 0;
-    bottom: 0;
+    top: 2.8rem;
+    border-bottom-right-radius: 5rem;
     border-top-right-radius: 5rem;
 }
 
 .index-style::after {
     content: "";
     height: 90vh;
-    width: 3.5rem;
+    width: 2.5rem;
     background-color: rgb(13, 110, 253);
     position: fixed;
     right: 0;
-    top: 0;
+    top: 2.8rem;
     border-bottom-left-radius: 5rem;
+    border-top-left-radius: 5rem;
 }
