@@ -15,7 +15,7 @@ export default function Login() {
         onSubmit: (values, { setSubmitting }) => {
             setTimeout(() => {
                 setSubmitting(false)
-            }, 2000)
+            }, 3000)
 
             const userData = {
                 password: values.password,
@@ -41,7 +41,7 @@ export default function Login() {
                     } else {
                         Swal.fire({
                             icon: "error",
-                            title: "No user found!",
+                            title: "User not found!",
                             text: "Try again"
                         })
                     }
@@ -51,21 +51,6 @@ export default function Login() {
                     }
                 })
         },
-        validate: (values) => {
-            const errors = {}
-            if (values.username === '') {
-                errors.username = 'Username is required!'
-            } else if (values.username.length < 4) {
-                errors.username = 'Username must be at least 4 characters long!'
-            }
-
-            if (values.password === '') {
-                errors.password = 'Password is required!'
-            } else if (values.password.length < 8) {
-                errors.password = 'Password must be at least 8 characters long!'
-            }
-            return errors
-        }
     })
 
     return (
@@ -76,7 +61,7 @@ export default function Login() {
 
                     </div>
                     <div className="col p-4  ">
-                    <img src="/images/png/signup-style.png" className='signup__style-image d-sm-none ' alt="image" />
+                        <img src="/images/png/signup-style.png" className='signup__style-image d-sm-none ' alt="image" />
                         <img src="/images/svgs/logo.svg" alt="logo" />
                         <h2 className=' fw-bold mt-2 '>Login to your Account</h2>
                         <h6 className=' text-black-50 lh-base '>Welcome to Fast Drive! Please enter your login credentials to access your account.</h6>
@@ -87,11 +72,9 @@ export default function Login() {
                                 className="mb-3"
                             >
                                 <Form.Control type="text" name='username' aria-describedby="passwordHelpBlock" value={form.values.username} onChange={form.handleChange} onBlur={form.handleBlur} placeholder="Username" required />
-                                {form.errors.username && form.touched.username && <Form.Text className=' ms-1 ' id="passwordHelpBlock" muted>{form.errors.username}</Form.Text>}
                             </FloatingLabel>
                             <FloatingLabel controlId="floatingPassword" label="Password">
                                 <Form.Control type="password" name='password' value={form.values.password} onChange={form.handleChange} onBlur={form.handleBlur} placeholder="Password" required />
-                                {form.errors.password && form.touched.password && <Form.Text className=' ms-1 ' id="passwordHelpBlock" muted>{form.errors.password}</Form.Text>}
                             </FloatingLabel>
                             <Button type='Submit' className=' mt-2 w-100 ' disabled={form.isSubmitting} >Login <RiLoginCircleLine className=' fs-4 ' /></Button>
                             <span className=' text-center d-flex justify-content-center mt-5 text-black-50 '>Don't have an account? <Link to="/sign-up" className=' ms-1 '> Sign up</Link></span>

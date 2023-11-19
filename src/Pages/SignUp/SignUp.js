@@ -13,10 +13,10 @@ export default function SignUp() {
 
     const form = useFormik({
         initialValues: { username: '', password: '' },
-        onSubmit: (values, {setSubmitting}) => {
+        onSubmit: (values, { setSubmitting }) => {
             setTimeout(() => {
                 setSubmitting(false)
-            }, 2000)
+            }, 3000)
 
             const newUserInfo = {
                 password: values.password,
@@ -25,30 +25,32 @@ export default function SignUp() {
             fetch(`http://fastdrive.pythonanywhere.com/api/users/signup/`, {
                 method: "POST",
                 headers: {
-                    "Content-Type" : "application/json",
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(newUserInfo)
             })
-            .then(res => {
-                if(res.ok) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "You have successfully registered",
-                        text: "Go to Drive",
-                    }).then(() => {
-                        navigate('/fast-drive')
-                    })
-                    return res.json()
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Something went wrong!",
-                        text: "Try again"
-                    })
-                }
-            }).then(result => {
-                authContext.login(result.token)
-            })
+                .then(res => {
+                    if (res.ok) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "You have successfully registered",
+                            text: "Go to Drive",
+                        }).then(() => {
+                            navigate('/fast-drive')
+                        })
+                        return res.json()
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Something went wrong!",
+                            text: "Try again"
+                        })
+                    }
+                }).then(result => {
+                    if (result) {
+                        authContext.login(result.token)
+                    }
+                })
         },
         validate: (values) => {
             const errors = {}
