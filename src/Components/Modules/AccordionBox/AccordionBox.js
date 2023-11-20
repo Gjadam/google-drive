@@ -5,8 +5,8 @@ export default function AccordionBox({ eventKey, header, body }) {
     return (
         <>
             <Accordion.Item eventKey={eventKey}>
-                <Accordion.Header className=''>{header}</Accordion.Header>
-                <Accordion.Body className=' lh-lg text-secondary  '>{body}</Accordion.Body>
+                <Accordion.Header >{header}</Accordion.Header>
+                <Accordion.Body className=' lh-lg '>{body}</Accordion.Body>
             </Accordion.Item>
         </>
     )
