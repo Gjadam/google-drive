@@ -80,11 +80,11 @@ export default function Index() {
         <Table borderless responsive hover>
           <thead>
             <tr >
-              <th className='text-black-50'>Name</th>
-              <th className='text-black-50'>Last Modified</th>
-              <th className='text-black-50'>Size</th>
-              <th className='text-black-50'>Type</th>
-              <th className='text-black-50'>View</th>
+              <th>Name</th>
+              <th>Last Modified</th>
+              <th>Size</th>
+              <th>Type</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>
