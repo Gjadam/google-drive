@@ -7,12 +7,14 @@ import Slider from 'react-infinite-logo-slider'
 import { FaGoogleDrive } from "react-icons/fa6";
 import LandingPageSection from '../../Components/Modules/LandingPageSection/LandingPageSection';
 import AccordionBox from '../../Components/Modules/AccordionBox/AccordionBox';
+import NavBar from '../../Components/Templates/NavBar/NavBar';
 export default function LandingPage() {
 
     const authContext = useContext(AuthContext)
 
     return (
         <>
+              <NavBar />
             <div className=" bg-primary rounded-bottom-5 p-5  ">
                 <Container >
                     <div className=' d-flex justify-content-center align-items-center flex-column  text-white  text-center  ' data-aos="fade-up" data-aos-duration="1500">
@@ -64,10 +66,10 @@ export default function LandingPage() {
                 <img src="/images/png/signup-style.png" className='image-style-1' alt="image-style" />
                 <img src="/images/png/signup-style.png" className='image-style-2' alt="image-style" />
                 <Container>
-                    <LandingPageSection title={'Built-in protections against malware, spam, and ransomware'} text={'Drive can provide encrypted and secure access to your files. Files shared with you can be proactively scanned and removed when malware, spam, ransomware, or phishing is detected. And Drive is cloud-native, which eliminates the need for local files and can minimize risk to your devices.'} image={'/images/jpg/landing-section-1.jpg'} dir={''} />
-                    <LandingPageSection title={'People-first collaboration apps to supercharge teamwork'} text={'Drive integrates with Docs, Sheets, and Slides, cloud-native collaboration apps that enable your team to create content and collaborate more effectively in real time.'} image={'/images/jpg/landing-section-2.jpg'} dir={'reverse'} />
-                    <LandingPageSection title={'Integration with the tools and apps your team is already using'} text={'Drive integrates with and complements your team’s existing technology. Collaborate in Microsoft Office files without the need to convert file formats, and edit and store over 100 additional file types, including PDFs, CAD files, images, and more.'} image={'/images/jpg/landing-section-3.jpg'} dir={''} />
-                    <LandingPageSection title={'Google’s Search and AI technology helps your team move faster'} text={'Google’s powerful search capabilities are embedded in Drive and offer speed, reliability, and collaboration. And features like Drive search chips help your team find files fast by quickly surfacing more relevant results.'} image={'/images/jpg/landing-section-4.jpg'} dir={'reverse'} />
+                    <LandingPageSection title={'Built-in protections against malware, spam, and ransomware'} text={'Drive can provide encrypted and secure access to your files. Files shared with you can be proactively scanned and removed when malware, spam, ransomware, or phishing is detected. And Drive is cloud-native, which eliminates the need for local files and can minimize risk to your devices.'} image={'/images/png/landing-section-1.png'} dir={''} />
+                    <LandingPageSection title={'People-first collaboration apps to supercharge teamwork'} text={'Drive integrates with Docs, Sheets, and Slides, cloud-native collaboration apps that enable your team to create content and collaborate more effectively in real time.'} image={'/images/png/landing-section-2.png'} dir={'reverse'} />
+                    <LandingPageSection title={'Integration with the tools and apps your team is already using'} text={'Drive integrates with and complements your team’s existing technology. Collaborate in Microsoft Office files without the need to convert file formats, and edit and store over 100 additional file types, including PDFs, CAD files, images, and more.'} image={'/images/png/landing-section-3.png'} dir={''} />
+                    <LandingPageSection title={'Google’s Search and AI technology helps your team move faster'} text={'Google’s powerful search capabilities are embedded in Drive and offer speed, reliability, and collaboration. And features like Drive search chips help your team find files fast by quickly surfacing more relevant results.'} image={'/images/png/landing-section-4.png'} dir={'reverse'} />
                 </Container>
             </div>
             <Container className=' mt-5 ' data-aos="fade-up" data-aos-duration="1500">
