@@ -8,8 +8,8 @@ export default function LandingPageSection({title, text, image, dir}) {
             <img src={image} alt="image" className='landing__image-section-height m-auto' />
         </div>
         <div className="col d-flex flex-column align-items-center  ">
-            <h2 className='landing-page-section__title'>{title}</h2>
-            <h6  className='landing-page-section__text lh-base  text-black-50 '>{text}</h6>
+            <h2 className='landing-page-section__title fw-bold '>{title}</h2>
+            <h6  className='landing-page-section__text lh-base'>{text}</h6>
         </div>
     </div>
 
