@@ -86,7 +86,7 @@ export default function SignUp() {
                     <div className="col p-4  ">
                         <img src="/images/png/signup-style.png" className='signup__style-image' alt="image" />
                         <img src="/images/svgs/logo.svg" alt="logo" />
-                        <h2 className=' fw-bold mt-2 '>Create your Account</h2>
+                        <h2 className=' fw-bold mt-2 text-black '>Create your Account</h2>
                         <h6 className=' text-black-50 lh-base '>Sign up now and unlock a world of possibilities. Let's get started on this exciting journey together!</h6>
                         <form className=' mt-4 ' onSubmit={form.handleSubmit}>
                             <FloatingLabel
