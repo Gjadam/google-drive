@@ -63,7 +63,7 @@ export default function NavBar() {
       <Navbar expand="lg">
         <Container>
           <Navbar.Brand>
-            <Link to="/fast-drive">
+            <Link to="/">
               <img src="/images/svgs/logo.svg" alt="logo" />
             </Link>
           </Navbar.Brand>
