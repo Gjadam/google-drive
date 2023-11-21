@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Index.css'
-import { ButtonGroup, Container, Dropdown, Table } from 'react-bootstrap'
+import { Alert, ButtonGroup, Container, Dropdown, Table } from 'react-bootstrap'
 import { HiPlus } from "react-icons/hi";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
@@ -177,45 +177,54 @@ export default function Index() {
       {/* End Recent Files */}
       <SectionHeader title="All Files" />
       {/* Start All Files  */}
-      <div>
-        <Table borderless responsive hover>
-          <thead>
-            <tr >
-              <th>Name</th>
-              <th>Rename</th>
-              <th>Delete</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              folders.map(folder => (
-                <tr key={folder.id}>
-                  <td>
-                    <img src="/images/png/folder-icon.png" alt="icon" />
-                    <span className=' ms-2 '>{folder.title}</span>
-                  </td>
-                  <td>
-                    <Link >
-                      <RxUpdate className=' text-success  fs-4 ' onClick={() => updateFolder(folder.id)} />
-                    </Link>
-                  </td>
-                  <td>
-                    <Link>
-                      <MdDelete className=' text-danger  fs-4 ' onClick={() => removeFolder(folder.id)} />
-                    </Link>
-                  </td>
-                  <td>
-                    <Link to={`/folder-info/${folder.id}`}>
-                      <AiFillEye className=' fs-4 ' />
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </Table>
-      </div>
+      {
+        folders.length ? (
+          <>
+            <div>
+              <Table borderless responsive hover>
+                <thead>
+                  <tr >
+                    <th>Name</th>
+                    <th>Rename</th>
+                    <th>Delete</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    folders.map(folder => (
+                      <tr key={folder.id}>
+                        <td>
+                          <img src="/images/png/folder-icon.png" alt="icon" />
+                          <span className=' ms-2 '>{folder.title}</span>
+                        </td>
+                        <td>
+                          <Link >
+                            <RxUpdate className=' text-success  fs-4 ' onClick={() => updateFolder(folder.id)} />
+                          </Link>
+                        </td>
+                        <td>
+                          <Link>
+                            <MdDelete className=' text-danger  fs-4 ' onClick={() => removeFolder(folder.id)} />
+                          </Link>
+                        </td>
+                        <td>
+                          <Link to={`/folder-info/${folder.id}`}>
+                            <AiFillEye className=' fs-4 ' />
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </Table>
+            </div>
+
+          </>
+        ) : (
+          <Alert variant='danger' >There are no files to display !</Alert>
+        )
+      }
       {/* End All Files  */}
 
     </Container>
