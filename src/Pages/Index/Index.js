@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Index.css'
 import { ButtonGroup, Container, Dropdown, Table } from 'react-bootstrap'
 import { HiPlus } from "react-icons/hi";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { RxUpdate } from "react-icons/rx";
+import { MdDelete } from "react-icons/md";
 import SectionHeader from '../../Components/Modules/SectionHeader/SectionHeader';
 import FileBox from '../../Components/Modules/FileBox/FileBox';
 import { Link } from 'react-router-dom';
@@ -12,17 +14,48 @@ import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
 import Swal from 'sweetalert2';
 export default function Index() {
 
-  
-  
-  const addNewFolder = async  () => {
+  const [folders, setFolders] = useState([])
+  const localStorageData = JSON.parse(localStorage.getItem("user"))
+
+  // Create Toast Styles 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+
+  useEffect(() => {
+    getAllFolders()
+  }, [])
+
+  // Get All Folders From Server
+  function getAllFolders() {
+    fetch(`http://fastdrive.pythonanywhere.com/api/folders/`, {
+      headers: {
+        'Authorization': `Token ${localStorageData.token}`
+      }
+    })
+      .then(res => res.json())
+      .then(allFolders => {
+        setFolders(allFolders)
+      })
+  }
+
+  // Add New Folders 
+  const addNewFolder = async () => {
     const { value: folderName } = await Swal.fire({
       title: "Add new folder",
       input: "text",
       inputLabel: "Please enter a name:",
       inputPlaceholder: "Enter your folder name"
     });
-    if(folderName) {
-      const localStorageData = JSON.parse(localStorage.getItem("user"))
+    if (folderName) {
       fetch(`http://fastdrive.pythonanywhere.com/api/folders/`, {
         method: "POST",
         headers: {
@@ -32,10 +65,78 @@ export default function Index() {
         body: JSON.stringify({
           title: folderName
         })
-      }).then(res => console.log(res))
+      }).then(res => {
+        if (res.ok) {
+          Toast.fire({
+            icon: "success",
+            title: "New folder Added"
+          }).then(() => {
+            getAllFolders()
+          })
+        }
+      })
     }
   }
 
+  // Delete Folder
+  const removeFolder = (folderID) => {
+    Swal.fire({
+      title: "Do you want to delete this folder?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://fastdrive.pythonanywhere.com/api/folders/${folderID}/`, {
+          method: "DELETE",
+          headers: {
+            'Authorization': `Token ${localStorageData.token}`
+          }
+        })
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: "Folder deleted successfully."
+            }).then(() => {
+              getAllFolders()
+            })
+          })
+      }
+    });
+  }
+
+  // Rename Folder
+  const updateFolder = async (folderID) => {
+    const { value: newFolderName } = await Swal.fire({
+      title: "Rename the folder",
+      input: "text",
+      inputLabel: "Please enter a name:",
+      inputPlaceholder: "Enter your folder name"
+    });
+    if (newFolderName) {
+      fetch(`http://fastdrive.pythonanywhere.com/api/folders/${folderID}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Token ${localStorageData.token}`
+        },
+        body: JSON.stringify({
+          title: newFolderName
+        })
+      }).then(res => {
+        if (res.ok) {
+          Toast.fire({
+            icon: "success",
+            title: "New folder name changed"
+          }).then(() => {
+            getAllFolders()
+          })
+        }
+      })
+    }
+  }
 
   return (
     <Container>
@@ -81,69 +182,37 @@ export default function Index() {
           <thead>
             <tr >
               <th>Name</th>
-              <th>Last Modified</th>
-              <th>Size</th>
-              <th>Type</th>
+              <th>Rename</th>
+              <th>Delete</th>
               <th>View</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <img src="/images/png/pdf-icon.png" alt="icon" />
-                <span className=' ms-2 '>pdf file test</span>
-              </td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>
-                <Link to="/file-info/1">
-                  <AiFillEye className=' fs-4 ' />
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src="/images/png/pdf-icon.png" alt="icon" />
-                <span className=' ms-2 '>pdf file test</span>
-              </td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>
-                <Link to="/file-info/1">
-                  <AiFillEye className=' fs-4 ' />
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src="/images/png/pdf-icon.png" alt="icon" />
-                <span className=' ms-2 '>pdf file test</span>
-              </td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>
-                <Link to="/file-info/1">
-                  <AiFillEye className=' fs-4 ' />
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img src="/images/png/pdf-icon.png" alt="icon" />
-                <span className=' ms-2 '>pdf file test</span>
-              </td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>
-                <Link to="/file-info/1">
-                  <AiFillEye className=' fs-4 ' />
-                </Link>
-              </td>
-            </tr>
+            {
+              folders.map(folder => (
+                <tr key={folder.id}>
+                  <td>
+                    <img src="/images/png/folder-icon.png" alt="icon" />
+                    <span className=' ms-2 '>{folder.title}</span>
+                  </td>
+                  <td>
+                    <Link >
+                      <RxUpdate className=' text-success  fs-4 ' onClick={() => updateFolder(folder.id)} />
+                    </Link>
+                  </td>
+                  <td>
+                    <Link>
+                      <MdDelete className=' text-danger  fs-4 ' onClick={() => removeFolder(folder.id)} />
+                    </Link>
+                  </td>
+                  <td>
+                    <Link to={`/folder-info/${folder.id}`}>
+                      <AiFillEye className=' fs-4 ' />
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            }
           </tbody>
         </Table>
       </div>
