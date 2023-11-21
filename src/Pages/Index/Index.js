@@ -222,7 +222,7 @@ export default function Index() {
 
           </>
         ) : (
-          <Alert variant='danger' >There are no files to display !</Alert>
+          <Alert variant='danger' >There are no files to Show !</Alert>
         )
       }
       {/* End All Files  */}
