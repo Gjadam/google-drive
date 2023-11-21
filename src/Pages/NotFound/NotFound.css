@@ -1,0 +1,9 @@
+.not-found__image-width {
+    width: 20rem;
+}
+
+@media screen and (min-width: 768px) {
+    .not-found__image-width {
+        width: 35rem;
+    }
+}
