@@ -10,7 +10,7 @@ import SignUp from "./Pages/SignUp/SignUp"
 const routes = [
     { path: '/', element: <LandingPage />},
     { path: '/fast-drive', element: <Index />},
-    { path: '/file-info/:fileName', element: <FileInfo /> },
+    { path: '/file-info/:fileID', element: <FileInfo /> },
     { path: '/folder-info/:folderID', element: <FolderInfo /> },
     { path: '/sign-up', element: <SignUp /> },
     { path: '/login', element: <Login /> },
