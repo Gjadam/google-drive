@@ -4,17 +4,20 @@ import { Alert, ButtonGroup, Container, Dropdown, Table } from 'react-bootstrap'
 import { HiPlus } from "react-icons/hi";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
-import { MdDelete } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 import SectionHeader from '../../Components/Modules/SectionHeader/SectionHeader';
 import FileBox from '../../Components/Modules/FileBox/FileBox';
 import { Link } from 'react-router-dom';
-import { AiFillEye } from "react-icons/ai";
+import { BiShowAlt } from "react-icons/bi";
 import NavBar from '../../Components/Templates/NavBar/NavBar';
 import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
 import Swal from 'sweetalert2';
 export default function Index() {
 
   const [folders, setFolders] = useState([])
+  const [files, setFiles] = useState([])
+
   const localStorageData = JSON.parse(localStorage.getItem("user"))
 
   // Create Toast Styles 
@@ -31,6 +34,7 @@ export default function Index() {
   });
 
   useEffect(() => {
+    getAllFiles()
     getAllFolders()
   }, [])
 
@@ -44,6 +48,21 @@ export default function Index() {
       .then(res => res.json())
       .then(allFolders => {
         setFolders(allFolders)
+      })
+  }
+
+  // Get All Files From Server
+  function getAllFiles() {
+    fetch(`http://fastdrive.pythonanywhere.com/api/media/`, {
+      headers: {
+        'Authorization': `Token ${localStorageData.token}`
+      }
+    })
+      .then(res => res.json())
+      .then(allFiles => {
+        setFiles(allFiles)
+      }).then(() => {
+        getAllFiles()
       })
   }
 
@@ -138,6 +157,68 @@ export default function Index() {
     }
   }
 
+
+  const uploadFile = async (file) => {
+    const formData = new FormData()
+
+    formData.append('files', file);
+
+    fetch(`http://fastdrive.pythonanywhere.com/api/media/`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Token ${localStorageData.token}`
+      },
+      body: formData
+    })
+      .then(res => {
+        if (res.ok) {
+          Toast.fire({
+            icon: "success",
+            title: "File Added successfully."
+          }).then(() => {
+            getAllFiles()
+          })
+        }
+      })
+  }
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      uploadFile(file);
+    }
+  };
+
+  // Delete File
+  const removeFile = (fileID) => {
+    Swal.fire({
+      title: "Do you want to delete this file?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://fastdrive.pythonanywhere.com/api/media/${fileID}/`, {
+          method: "DELETE",
+          headers: {
+            'Authorization': `Token ${localStorageData.token}`
+          }
+        })
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: "File deleted successfully."
+            }).then(() => {
+              getAllFiles()
+            })
+          })
+      }
+    });
+  }
+
+
   return (
     <Container>
       <NavBar />
@@ -148,7 +229,7 @@ export default function Index() {
         <form className='ms-3 mb-1  ' method="POST" encType="multipart/form-data">
           <Dropdown as={ButtonGroup}>
             <label htmlFor="files" className='btn btn-primary d-flex align-items-center  '><HiPlus /></label>
-            <input id="files" className='d-none' type="file" />
+            <input id="files" className='d-none' type="file" onChange={handleFileChange} />
             <Dropdown.Toggle split id="dropdown-custom-2" />
             <Dropdown.Menu >
               <Dropdown.Item eventKey="1" className=' d-flex justify-content-center align-items-center' onClick={addNewFolder}><MdOutlineCreateNewFolder className=' me-1 ' />New Folder</Dropdown.Item>
@@ -178,16 +259,15 @@ export default function Index() {
       <SectionHeader title="All Files" />
       {/* Start All Files  */}
       {
-        folders.length ? (
+        folders.length || files.length ? (
           <>
             <div>
               <Table borderless responsive hover>
                 <thead>
                   <tr >
                     <th>Name</th>
-                    <th>Rename</th>
-                    <th>Delete</th>
-                    <th>View</th>
+                    <th></th>
+                    <th>Options</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,20 +278,51 @@ export default function Index() {
                           <img src="/images/png/folder-icon.png" alt="icon" />
                           <span className=' ms-2 '>{folder.title}</span>
                         </td>
+                        <td></td>
                         <td>
-                          <Link >
-                            <RxUpdate className=' text-success  fs-4 ' onClick={() => updateFolder(folder.id)} />
-                          </Link>
+                          <abbr title="View">
+                            <Link to={`/folder-info/${folder.id}`}>
+                              <BiShowAlt className=' fs-4 ' />
+                            </Link>
+                          </abbr>
+                          <abbr title="Rename">
+                            <Link >
+                              <MdDriveFileRenameOutline className=' fs-5 mx-3' onClick={() => updateFolder(folder.id)} />
+                            </Link>
+                          </abbr>
+                          <abbr title="Delete">
+                            <Link>
+                              <MdDeleteOutline className=' text-danger fs-5 ' onClick={() => removeFolder(folder.id)} />
+                            </Link>
+                          </abbr>
                         </td>
+                      </tr>
+                    ))
+                  }
+                  {
+                    files.map(file => (
+                      <tr key={file.id}>
                         <td>
-                          <Link>
-                            <MdDelete className=' text-danger  fs-4 ' onClick={() => removeFolder(folder.id)} />
-                          </Link>
+                          <img src="/images/png/file-icon.png" alt="icon" />
+                          <span className=' ms-2 '>File</span>
                         </td>
+                        <td></td>
                         <td>
-                          <Link to={`/folder-info/${folder.id}`}>
-                            <AiFillEye className=' fs-4 ' />
-                          </Link>
+                          <abbr title="View">
+                            <Link to={`/file-info/${file.id}`}>
+                              <BiShowAlt className=' fs-4 ' />
+                            </Link>
+                          </abbr>
+                          <abbr title="Update">
+                            <Link >
+                              <RxUpdate className=' fs-5 mx-3 ' />
+                            </Link>
+                          </abbr>
+                          <abbr title="Delete">
+                            <Link>
+                              <MdDeleteOutline className=' text-danger fs-5 ' onClick={() => removeFile(file.id)} />
+                            </Link>
+                          </abbr>
                         </td>
                       </tr>
                     ))
@@ -219,10 +330,9 @@ export default function Index() {
                 </tbody>
               </Table>
             </div>
-
           </>
         ) : (
-          <Alert variant='danger' >There are no files to Show !</Alert>
+          <Alert variant='primary' >There are no files or folders to Show !</Alert>
         )
       }
       {/* End All Files  */}
