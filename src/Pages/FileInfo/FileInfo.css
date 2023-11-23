@@ -1,3 +1,4 @@
-.card-mage__height {
+.card-image__size {
     height: 60vh;
+    width: 40rem !important;
 }
