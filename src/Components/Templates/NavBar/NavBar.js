@@ -80,7 +80,7 @@ export default function NavBar() {
                 </Form>
               </Nav>
               <div className="">
-                <input type="checkbox" class="theme-checkbox mt-lg-1 mt-3" onClick={darkModeBtn} />
+                <input type="checkbox" className="theme-checkbox mt-lg-1 mt-3" onClick={darkModeBtn} />
               </div>
             </Nav>
             {
