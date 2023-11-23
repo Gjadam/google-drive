@@ -1,4 +1,5 @@
 .card-image__size {
-    height: 60vh;
-    width: 40rem !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30rem !important;
 }
