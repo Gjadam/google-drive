@@ -27,7 +27,18 @@
     -->
     <title>Fast Drive</title>
   </head>
-  <body data-bs-theme="light">
+  <body data-bs-theme="light" class="overflow-hidden ">
+    <!-- Start Loader Page -->
+    <div class="loader-page  d-flex justify-content-center align-items-center ">
+      <div class="loading">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <!-- End Loader Page -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -40,5 +51,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      window.addEventListener('load', () => {
+        document.body.classList.remove('overflow-hidden')
+        document.querySelector('.loader-page').classList.add('d-none')
+        document.querySelector('.loading').classList.add('d-none')
+      })
+    </script>
   </body>
 </html>
