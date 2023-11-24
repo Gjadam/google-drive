@@ -14,10 +14,10 @@ export default function LandingPage() {
 
     return (
         <>
-              <NavBar />
+            <NavBar />
             <div className=" bg-primary rounded-bottom-5 p-5  ">
                 <Container >
-                    <div className=' d-flex justify-content-center align-items-center flex-column  text-white  text-center  ' data-aos="fade-up" data-aos-duration="1500">
+                    <div className=' d-flex justify-content-center align-items-center flex-column  text-white  text-center  '>
                         <img src="/images/png/landing-header-bg.png" className='landing__image-height rounded mb-2 ' alt="image" />
                         <h2 className=' fw-bold'>Easy and secure access to your content</h2>
                         <h6 className=' my-3 '>Store, share, and collaborate on files and folders from your mobile device, tablet, or computer Try Drive for Work </h6>
