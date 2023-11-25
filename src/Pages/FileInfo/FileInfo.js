@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Card, Container, Image } from 'react-bootstrap'
-import './FileInfo.css'
 import NavBar from '../../Components/Templates/NavBar/NavBar'
 import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
 import { useParams } from 'react-router-dom'
@@ -44,8 +43,8 @@ export default function FileInfo() {
                     <Loader />
                 ) : (
                     <div className="row  my-5 overflow-hidden">
-                        <div className="col-12 col-md-6 ">
-                                <img className='card-image__size rounded-5 ' src={fileUrl} />
+                        <div className="card-image__size col-12 col-md-6 ">
+                                <img className=' w-100  rounded-5 ' src={fileUrl} />
                         </div>
                         <div className="col p-4 ">
                             <label className=' text-primary'>name: </label>
