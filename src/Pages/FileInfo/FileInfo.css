@@ -1,3 +1,7 @@
 .FileInfo-height {
     height: 85vh;
 }
+
+.FileInfo__image-height {
+    height: 25rem;
+}
