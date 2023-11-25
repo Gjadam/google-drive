@@ -43,33 +43,27 @@ export default function FileInfo() {
                     <Loader />
                 ) : (
                     <div className="row  my-5 overflow-hidden">
-                        <div className="card-image__size col-12 col-md-6 ">
-                                <img className=' w-100  rounded-5 ' src={fileUrl} />
+                        <div className=" col-12 col-md-6 ">
+                            <img className=' w-100  rounded-5 ' src={fileUrl} />
                         </div>
-                        <div className="col p-4 ">
-                            <label className=' text-primary'>name: </label>
-                            <h5 className=' p-2 '>{fileName}</h5>
-                            <label className=' text-primary '>format: </label>
-                            <h5 className=' p-2 '>{fileFormat}</h5>
-                            <label className=' text-primary '>size: </label>
-                            <h5 className=' p-2 '>{fileSize}</h5>
+                        <div className="col mt-4 mt-md-0 ">
+                            <div className=" d-flex justify-content-between align-items-center p-2 ">
+                                <label className=' text-primary'>name: </label>
+                                <h5 className='  '>{fileName}</h5>
+                            </div>
+                            <div className=" d-flex justify-content-between align-items-center p-2">
+                                <label className=' text-primary '>format: </label>
+                                <h5 className='  '>{fileFormat}</h5>
+                            </div>
+                            <div className=" d-flex justify-content-between align-items-center p-2 ">
+                                <label className=' text-primary '>size: </label>
+                                <h5 className=' '>{fileSize}</h5>
+                            </div>
                             <a href={fileUrl}>
-                                <Button className=' w-100 rounded-5 '>Download</Button>
+                                <Button className=' w-100 rounded-5'>Download</Button>
                             </a>
                         </div>
                     </div>
-                    // <Card className=' my-5 rounded-5 overflow-hidden'>
-                    //     <div className=" d-flex justify-content-center align-items-center ">
-                    //         <Card.Img variant="top" className='card-image__size' src={fileData} />
-                    //     </div>
-                    //     <Card.Title>Card Title</Card.Title>
-                    //     <Card.Footer className=' w-100 '>
-                    //         <a href={fileData}>
-                    //             <Button className=' rounded-bottom-5 w-100 '>Download</Button>
-                    //         </a>
-                    //     </Card.Footer>
-                    // </Card>
-
                 )
             }
         </Container>
