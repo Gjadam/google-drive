@@ -267,7 +267,7 @@ export default function Index() {
             }
           </div>
         ) : (
-          <Alert variant='primary' >There are no files or folders to Show !</Alert>
+          <Alert variant='primary' >There are no files to Show !</Alert>
         )
       }
 
