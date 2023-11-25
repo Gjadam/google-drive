@@ -6,9 +6,14 @@ import PageStyle from '../../Components/Modules/PageStyle/PageStyle'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import Loader from '../../Components/Modules/Loader/Loader'
 export default function FileInfo() {
 
-    const [fileData, setFileData] = useState([])
+    const [fileUrl, setFileUrl] = useState([])
+    const [fileName, setFileName] = useState([])
+    const [fileFormat, setFileFormat] = useState([])
+    const [fileSize, setFileSize] = useState([])
+
     const [isLoading, setIsLoading] = useState(true)
     const { fileID } = useParams()
     const localStorageData = JSON.parse(localStorage.getItem("user"))
@@ -21,10 +26,14 @@ export default function FileInfo() {
         })
             .then(res => res.json())
             .then(fileDatas => {
-                setFileData(fileDatas.file)
+                setFileUrl(fileDatas.file)
+                setFileFormat(fileDatas.file_format)
+                setFileName(fileDatas.file_name)
+                setFileSize(fileDatas.file_size)
                 setIsLoading(false)
             })
     }, [])
+
 
     return (
         <Container >
@@ -32,21 +41,35 @@ export default function FileInfo() {
             <PageStyle />
             {
                 isLoading ? (
-                    <div class="card-placeholder my-5">
-                        <div class="card__skeleton card__description"></div>
-                        <div class="card__skeleton card__title mt-3 "></div>
-                    </div>
+                    <Loader />
                 ) : (
-                    <Card className=' my-5 rounded-5 overflow-hidden'>
-                        <div className=" d-flex justify-content-center align-items-center ">
-                            <Card.Img variant="top" className='card-image__size' src={fileData} />
+                    <div className="row  my-5 overflow-hidden">
+                        <div className="col-12 col-md-6 ">
+                                <img className='card-image__size rounded-5 ' src={fileUrl} />
                         </div>
-                        <Card.Footer className=' w-100 '>
-                            <a href={fileData}>
-                                <Button className=' rounded-bottom-5 w-100 '>Download</Button>
+                        <div className="col p-4 ">
+                            <label className=' text-primary'>name: </label>
+                            <h5 className=' p-2 '>{fileName}</h5>
+                            <label className=' text-primary '>format: </label>
+                            <h5 className=' p-2 '>{fileFormat}</h5>
+                            <label className=' text-primary '>size: </label>
+                            <h5 className=' p-2 '>{fileSize}</h5>
+                            <a href={fileUrl}>
+                                <Button className=' w-100 rounded-5 '>Download</Button>
                             </a>
-                        </Card.Footer>
-                    </Card>
+                        </div>
+                    </div>
+                    // <Card className=' my-5 rounded-5 overflow-hidden'>
+                    //     <div className=" d-flex justify-content-center align-items-center ">
+                    //         <Card.Img variant="top" className='card-image__size' src={fileData} />
+                    //     </div>
+                    //     <Card.Title>Card Title</Card.Title>
+                    //     <Card.Footer className=' w-100 '>
+                    //         <a href={fileData}>
+                    //             <Button className=' rounded-bottom-5 w-100 '>Download</Button>
+                    //         </a>
+                    //     </Card.Footer>
+                    // </Card>
 
                 )
             }
