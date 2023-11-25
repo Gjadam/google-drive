@@ -233,7 +233,7 @@ export default function Index() {
       }
     });
   }
-
+  
   return (
     <Container>
       <NavBar />
@@ -261,7 +261,7 @@ export default function Index() {
             {
               recentFiles.map(recentFile => (
                 <Link to={`/file-info/${recentFile.id}`} className='text-decoration-none '>
-                  <FileBox fileName={recentFile.file_name} format={recentFile.file_format} />
+                  <FileBox fileName={recentFile.file_name} format={recentFile.file_format} fileImg={recentFile.file}/>
                 </Link>
               ))
             }
