@@ -75,7 +75,7 @@ export default function Index() {
     })
       .then(res => res.json())
       .then(resentData => {
-        setRecentFiles(resentData)
+        setRecentFiles(resentData.splice(0, 3))
       })
 
   }
@@ -233,7 +233,8 @@ export default function Index() {
       }
     });
   }
-  
+
+
   return (
     <Container>
       <NavBar />
