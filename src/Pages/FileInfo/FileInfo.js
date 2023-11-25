@@ -44,10 +44,10 @@ export default function FileInfo() {
                 isLoading ? (
                     <Loader />
                 ) : (
-                    <div className=" d-flex justify-content-center align-items-center FileInfo-height ">
+                    <div className="FileInfo-height  d-flex justify-content-center align-items-center ">
                         <div className="row overflow-hidden">
-                            <div className=" col-12 col-md-6 ">
-                                <img className=' w-100  rounded-5 ' src={fileUrl} />
+                            <div className="FileInfo__image-height  col-12 col-md-6 ">
+                                <img className=' w-100 rounded-5 ' src={fileUrl} />
                             </div>
                             <div className="col mt-4 mt-md-0 ">
                                 <div className=" d-flex justify-content-between align-items-center p-2 ">
