@@ -49,10 +49,10 @@ export default function FileInfo() {
                             <div className="FileInfo__image-height  col-12 col-md-6 ">
                                 <img className=' w-100 rounded-5 ' src={fileUrl} />
                             </div>
-                            <div className="col mt-4 mt-md-0 ">
+                            <div className="col ">
                                 <div className=" d-flex justify-content-between align-items-center p-2 ">
                                     <label className=' text-primary'>name: </label>
-                                    <h5 className='  '>{fileName}</h5>
+                                    <h5 className='  '>{fileName.slice(0, 20)}...</h5>
                                 </div>
                                 <div className=" d-flex justify-content-between align-items-center p-2">
                                     <label className=' text-primary '>format: </label>
