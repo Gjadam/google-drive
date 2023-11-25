@@ -17,6 +17,7 @@ export default function Index() {
 
   const [folders, setFolders] = useState([])
   const [files, setFiles] = useState([])
+  const [recentFiles, setRecentFiles] = useState([])
 
   const localStorageData = JSON.parse(localStorage.getItem("user"))
 
@@ -36,6 +37,7 @@ export default function Index() {
   useEffect(() => {
     getAllFiles()
     getAllFolders()
+    getRecentFiles()
   }, [])
 
   // Get All Folders From Server
@@ -61,9 +63,21 @@ export default function Index() {
       .then(res => res.json())
       .then(allFiles => {
         setFiles(allFiles)
-      }).then(() => {
-        getAllFiles()
       })
+  }
+
+  // Get Recent Files
+  function getRecentFiles() {
+    fetch(`http://fastdrive.pythonanywhere.com/api/media/recent/`, {
+      headers: {
+        'Authorization': `Token ${localStorageData.token}`
+      }
+    })
+      .then(res => res.json())
+      .then(resentData => {
+        setRecentFiles(resentData)
+      })
+
   }
 
   // Add New Folders 
@@ -177,6 +191,7 @@ export default function Index() {
             title: "File Added successfully."
           }).then(() => {
             getAllFiles()
+            getRecentFiles()
           })
         }
       })
@@ -212,12 +227,12 @@ export default function Index() {
               title: "File deleted successfully."
             }).then(() => {
               getAllFiles()
+              getRecentFiles()
             })
           })
       }
     });
   }
-
 
   return (
     <Container>
@@ -240,21 +255,23 @@ export default function Index() {
       {/* End Add Drive */}
       <SectionHeader title="Recent Files" />
       {/* Start Recent Files */}
-      <div className=" d-flex justify-content-around align-items-centerf flex-wrap gap-3 mt-4  ">
-        <Link to="/file-info/1" className='text-decoration-none '>
-          <FileBox />
-        </Link>
-        <Link to="/file-info/1" className='text-decoration-none '>
-          <FileBox />
-        </Link>
-        <Link to="/file-info/1" className='text-decoration-none '>
-          <FileBox />
-        </Link>
-        <Link to="/file-info/1" className='text-decoration-none '>
-          <FileBox />
-        </Link>
+      {
+        recentFiles.length ? (
+          <div className=" d-flex justify-content-around align-items-centerf flex-wrap gap-3 mt-4  ">
+            {
+              recentFiles.map(recentFile => (
+                <Link to={`/file-info/${recentFile.id}`} className='text-decoration-none '>
+                  <FileBox fileName={recentFile.file_name} format={recentFile.file_format} />
+                </Link>
+              ))
+            }
+          </div>
+        ) : (
+          <Alert variant='primary' >There are no files or folders to Show !</Alert>
+        )
+      }
 
-      </div>
+
       {/* End Recent Files */}
       <SectionHeader title="All Files" />
       {/* Start All Files  */}
@@ -304,18 +321,13 @@ export default function Index() {
                       <tr key={file.id}>
                         <td>
                           <img src="/images/png/file-icon.png" alt="icon" />
-                          <span className=' ms-2 '>File</span>
+                          <span className=' ms-2 '>{file.file_name.slice(0, 10)}...</span>
                         </td>
                         <td></td>
                         <td>
                           <abbr title="View">
                             <Link to={`/file-info/${file.id}`}>
-                              <BiShowAlt className=' fs-4 ' />
-                            </Link>
-                          </abbr>
-                          <abbr title="Update">
-                            <Link >
-                              <RxUpdate className=' fs-5 mx-3 ' />
+                              <BiShowAlt className=' fs-4 me-3 ' />
                             </Link>
                           </abbr>
                           <abbr title="Delete">
