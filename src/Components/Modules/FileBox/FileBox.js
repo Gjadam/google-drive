@@ -3,7 +3,7 @@ import './FileBox.css'
 import { FaRegImage } from "react-icons/fa6";
 export default function FileBox({ fileName, format, fileImg }) {
   return (
-    <div className='file-box__size d-flex justify-content-center align-items-center flex-column rounded-5 border overflow-hidden '>
+    <div className='file-box__size d-flex justify-content-between align-items-center flex-column rounded-5 border overflow-hidden shadow '>
       <div className=" overflow-hidden ">
       <img src={fileImg} className=' w-100 ' alt="image" />
       </div>
