@@ -248,9 +248,9 @@ export default function Index() {
         {/* Start Recent Files */}
         {
           recentFiles?.length ? (
-            <div className=" d-flex justify-content-around align-items-centerf flex-wrap gap-3 mt-4  ">
+            <div className=" d-flex justify-content-around align-items-centerf flex-wrap gap-1  mt-4  ">
               {
-                recentFiles.slice(0, 3).map(recentFile => (
+                recentFiles.slice(0, 4).map(recentFile => (
                   <Link to={`/file-info/${recentFile.id}`} className='text-decoration-none '>
                     <FileBox fileName={recentFile.file_name} format={recentFile.file_format} fileImg={recentFile.file} />
                   </Link>
