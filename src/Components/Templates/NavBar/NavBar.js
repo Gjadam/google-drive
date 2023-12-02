@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container, Form, Image, Nav, NavDropdown, Navbar, Offcanvas } from 'react-bootstrap'
 import { FaCircleUser } from "react-icons/fa6";
+import { IoMdLogOut } from "react-icons/io";
 import './NavBar.css'
 import AuthContext from '../../../context/authContext';
 import Swal from 'sweetalert2';
@@ -88,7 +89,7 @@ export default function NavBar() {
                 <div className="d-flex align-items-center mt-lg-0 mt-3  ">
                   <FaCircleUser className=' text-primary fs-1 ' />
                   <h6 className='m-2 fw-bold '>{authContext.userInfos.username}</h6>
-                  <Button variant='outline-danger' size='sm' className=' ms-2' onClick={logOut}>Logout</Button>
+                  <Button variant='outline-danger' size='sm' className='rounded-5 p-2' onClick={logOut}><IoMdLogOut className=' fs-4 ' /></Button>
                 </div>
               ) : (
                 <>
