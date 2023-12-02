@@ -53,7 +53,7 @@ export default function SignUp() {
                         Swal.fire({
                             icon: "error",
                             title: "Something went wrong!",
-                            text: "Try again"
+                            text: "A user with this name has already registered! Please try again."
                         })
                     }
                 }).then(result => {

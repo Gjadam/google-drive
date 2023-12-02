@@ -52,7 +52,7 @@ export default function Login() {
                         Swal.fire({
                             icon: "error",
                             title: "User not found!",
-                            text: "Try again"
+                            text: "there is no user with this username! Please try again."
                         })
                     }
                 }).then(result => {
