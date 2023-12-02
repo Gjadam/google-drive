@@ -1,0 +1,8 @@
+.uploading-loader__wrapper {
+    width: 19rem;
+    height: 3.5rem;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1rem;
+    z-index: 2;
+}
