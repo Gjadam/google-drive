@@ -276,7 +276,7 @@ export default function Index() {
                       <div>
                         <img src="/images/png/folder-icon.png" alt="icon" />
                         <Link to={`/folder-info/${folder.id}`} className=' text-decoration-none '>
-                          <span className=' ms-2'>{folder.title.slice(0, 10)}...</span>
+                          <span className=' ms-2'>{folder.title.slice(0, 10)}{folder.title.length > 10 && "..."}</span>
                         </Link>
                       </div>
                       <div >
@@ -293,7 +293,7 @@ export default function Index() {
                       <div>
                         <img src="/images/png/file-icon.png" alt="icon" />
                         <Link to={`/file-info/${file.id}`} className=' text-decoration-none '>
-                          <span className=' ms-2'>{file.file_name.slice(0, 10)}...</span>
+                          <span className=' ms-2'>{file.file_name.slice(0, 10)}{file.file_name.length > 10 && "..."}</span>
                         </Link>
                       </div>
                       <div>
