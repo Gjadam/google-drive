@@ -130,6 +130,7 @@ export default function Index() {
     });
   }
 
+
   // Rename Folder
   // const updateFolder = async (folderID) => {
   //   const { value: newFolderName } = await Swal.fire({
