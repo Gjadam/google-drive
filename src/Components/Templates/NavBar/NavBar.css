@@ -50,3 +50,12 @@
 .theme-checkbox:checked {
     background-position: 100%;
 }
+
+
+
+/* Search Box */ 
+
+.searchBox {
+    position: absolute;
+    left: -0.5rem;
+}
