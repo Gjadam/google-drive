@@ -6,12 +6,17 @@ import './NavBar.css'
 import AuthContext from '../../../context/authContext';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import SearchBox from '../../Modules/SearchBox/SearchBox';
 export default function NavBar() {
 
+  const [searchValue, setSearchValue] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const [isDisable, setIsDisable] = useState(true)
   const [flag, setFlag] = useState(true)
-
   const authContext = useContext(AuthContext)
   const navigate = useNavigate()
+  const localStorageData = JSON.parse(localStorage.getItem("user"))
 
   const logOut = () => {
     Swal.fire({
@@ -57,7 +62,34 @@ export default function NavBar() {
         bodyElement.dataset.bsTheme = "light"
       }
     }
+
+    if(authContext.isLoggedIn) {
+      setIsDisable(false)
+    } else {
+      setIsDisable(true)
+    }
+
   }, [])
+
+  useEffect(() => {
+    // Get Search Datas from server
+    if (searchValue.length > 0) {
+      fetch(`http://fastdrive.pythonanywhere.com/api/search/?q=${searchValue}`, {
+        headers: {
+          'Authorization': `Token ${localStorageData.token}`
+        }
+      })
+        .then(res => res.json())
+        .then(searchDatas => setSearchResults(searchDatas))
+    }
+  }, [searchValue])
+
+
+
+  const searchSubmit = (e) => {
+    e.preventDefault()
+    navigate(`/search/${searchValue}`)
+  }
 
   return (
     <>
@@ -72,12 +104,24 @@ export default function NavBar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Form className=" w-100 ">
+                <Form className=" position-relative  w-100 " onSubmit={(e) => searchSubmit(e)}>
                   <Form.Control
                     type="search"
                     placeholder="Search Drive"
                     className=" rounded-5 py-2 "
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    disabled={isDisable}
                   />
+                  {
+                    searchValue.length > 0 &&
+                    <div className="searchBox w-100  d-flex flex-column  p-3 ms-2  rounded-2 z-3 shadow-sm bg-light-subtle ">
+                      {
+                        searchResults.map(searchResult => (
+                          <SearchBox type={searchResult.type} id={searchResult.id} title={searchResult.title} />
+                        ))
+                      }
+                    </div>
+                  }
                 </Form>
               </Nav>
               <div className="">
