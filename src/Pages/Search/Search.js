@@ -30,7 +30,7 @@ export default function Search() {
             <SectionHeader title={"Search result:"} />
             {
                 searchResults.map(searchResult => (
-                    <SearchBox type={searchResult.type} id={searchResult.id} title={searchResult.title} />
+                    <SearchBox key={searchResult.id} type={searchResult.type} id={searchResult.id} title={searchResult.title} />
                 ))
             }
         </Container>
