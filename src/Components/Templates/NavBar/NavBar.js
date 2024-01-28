@@ -63,13 +63,16 @@ export default function NavBar() {
       }
     }
 
+    
+  }, [])
+  
+  useEffect(() => {
     if(authContext.isLoggedIn) {
       setIsDisable(false)
     } else {
       setIsDisable(true)
     }
-
-  }, [])
+  } , [authContext.isLoggedIn])
 
   useEffect(() => {
     // Get Search Datas from server
