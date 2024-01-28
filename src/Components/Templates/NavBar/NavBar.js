@@ -117,7 +117,7 @@ export default function NavBar() {
                     <div className="searchBox w-100  d-flex flex-column  p-3 ms-2  rounded-2 z-3 shadow-sm bg-light-subtle ">
                       {
                         searchResults.map(searchResult => (
-                          <SearchBox type={searchResult.type} id={searchResult.id} title={searchResult.title} />
+                          <SearchBox key={searchResult.id} type={searchResult.type} id={searchResult.id} title={searchResult.title} />
                         ))
                       }
                     </div>
