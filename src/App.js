@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem("user"))
     if (localStorageData) {
-      fetch(`http://fastdrive.pythonanywhere.com/api/users/me/`, {
+      fetch(`http://fastdrivev2.pythonanywhere.com/api/users/me/`, {
         headers: {
           'Authorization': `Token ${localStorageData.token}`
         }
