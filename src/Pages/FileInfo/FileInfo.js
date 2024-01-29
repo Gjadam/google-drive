@@ -17,7 +17,7 @@ export default function FileInfo() {
 
     // Get Single File
     const { data: fileData } = useQuery(["single-file", fileID], () => {
-        return fetch(`http://fastdrive.pythonanywhere.com/api/media/${fileID}/`, {
+        return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/${fileID}/`, {
             headers: {
                 'Authorization': `Token ${localStorageData.token}`
             }
