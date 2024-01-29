@@ -16,7 +16,7 @@ export default function FolderInfo() {
 
     // Get Single Folder
     const { data: folderData } = useQuery("single-folder", () => {
-        return fetch(`http://fastdrive.pythonanywhere.com/api/folders/${folderID}/`, {
+        return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/${folderID}/`, {
             headers: {
                 'Authorization': `Token ${localStorageData.token}`
             }
