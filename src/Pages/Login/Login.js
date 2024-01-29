@@ -21,7 +21,7 @@ export default function Login() {
                 password: values.password,
                 username: values.username,
             }
-            fetch(`http://fastdrive.pythonanywhere.com/api/users/login/`, {
+            fetch(`http://fastdrivev2.pythonanywhere.com/api/users/login/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
