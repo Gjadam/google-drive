@@ -14,7 +14,7 @@ export default function Search() {
     const localStorageData = JSON.parse(localStorage.getItem("user"))
 
     useEffect(() => {
-        fetch(`http://fastdrive.pythonanywhere.com/api/search/?q=${searchID}`, {
+        fetch(`http://fastdrivev2.pythonanywhere.com/api/search/?q=${searchID}`, {
             headers: {
                 'Authorization': `Token ${localStorageData.token}`
             }
