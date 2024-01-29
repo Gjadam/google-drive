@@ -22,7 +22,7 @@ export default function SignUp() {
                 password: values.password,
                 username: values.username,
             }
-            fetch(`http://fastdrive.pythonanywhere.com/api/users/signup/`, {
+            fetch(`http://fastdrivev2.pythonanywhere.com/api/users/signup/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
