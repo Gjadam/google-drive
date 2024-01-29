@@ -77,7 +77,7 @@ export default function NavBar() {
   useEffect(() => {
     // Get Search Datas from server
     if (searchValue.length > 0) {
-      fetch(`http://fastdrive.pythonanywhere.com/api/search/?q=${searchValue}`, {
+      fetch(`http://fastdrivev2.pythonanywhere.com/api/search/?q=${searchValue}`, {
         headers: {
           'Authorization': `Token ${localStorageData.token}`
         }
