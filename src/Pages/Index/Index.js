@@ -34,7 +34,7 @@ export default function Index() {
 
   // Get All Folders From Server
   const { data: folders } = useQuery("folders", () => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/folders/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/`, {
       headers: {
         'Authorization': `Token ${localStorageData.token}`
       }
@@ -44,7 +44,7 @@ export default function Index() {
 
   // Get All Files From Server
   const { data: files } = useQuery("files", () => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/media/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/`, {
       headers: {
         'Authorization': `Token ${localStorageData.token}`
       }
@@ -54,7 +54,7 @@ export default function Index() {
 
   // Get Recent Files
   const { data: recentFiles } = useQuery("recentFiles", () => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/media/recent/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/recent/`, {
       headers: {
         'Authorization': `Token ${localStorageData.token}`
       }
@@ -64,7 +64,7 @@ export default function Index() {
 
   // Add New Folders 
   const { mutate: newFolderMutate } = useMutation((folderName) => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/folders/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default function Index() {
 
   // Delete Folder
   const { mutate: removeFolderMutate } = useMutation((folderID) => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/folders/${folderID}/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/${folderID}/`, {
       method: "DELETE",
       headers: {
         'Authorization': `Token ${localStorageData.token}`
@@ -162,7 +162,7 @@ export default function Index() {
 
   // Upload File 
   const { mutate: uploadFileMutate, isLoading } = useMutation((formData) => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/media/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/`, {
       method: "POST",
       headers: {
         "Authorization": `Token ${localStorageData.token}`
@@ -189,7 +189,7 @@ export default function Index() {
 
   // Delete File
   const { mutate: removeFileMutate } = useMutation((fileID) => {
-    return fetch(`http://fastdrive.pythonanywhere.com/api/media/${fileID}/`, {
+    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/${fileID}/`, {
       method: "DELETE",
       headers: {
         'Authorization': `Token ${localStorageData.token}`
