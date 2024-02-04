@@ -7,21 +7,20 @@ import { Link, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import FileBox from '../../Components/Modules/FileBox/FileBox'
 import SearchBox from '../../Components/Modules/SearchBox/SearchBox'
-
+import apiRequest from '../../Services/Axios/Configs/config'
 export default function Search() {
     const [searchResults, setSearchResults] = useState([])
     const { searchID } = useParams()
-    const localStorageData = JSON.parse(localStorage.getItem("user"))
+
+    const getSearchData = async () => {
+        const res = await apiRequest.get(`/search/?q=${searchID}`)
+        setSearchResults(res.data)
+    }
 
     useEffect(() => {
-        fetch(`http://fastdrivev2.pythonanywhere.com/api/search/?q=${searchID}`, {
-            headers: {
-                'Authorization': `Token ${localStorageData.token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => setSearchResults(data))
+        getSearchData()
     }, [searchID])
+
 
     return (
         <Container>
