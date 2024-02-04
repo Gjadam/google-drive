@@ -7,22 +7,18 @@ import { useParams } from 'react-router-dom'
 import { RiDownloadCloud2Fill } from "react-icons/ri";
 import Loader from '../../Components/Modules/Loader/Loader'
 import { useQuery } from 'react-query'
+import apiRequest from '../../Services/Axios/Configs/config'
 export default function FileInfo() {
     
     
     const [fileImage, setFileImage] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const { fileID } = useParams()
-    const localStorageData = JSON.parse(localStorage.getItem("user"))
 
     // Get Single File
-    const { data: fileData } = useQuery(["single-file", fileID], () => {
-        return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/${fileID}/`, {
-            headers: {
-                'Authorization': `Token ${localStorageData.token}`
-            }
-        })
-            .then(res => res.json())
+    const { data: fileData } = useQuery(["single-file", fileID], async () => {
+        const res = await apiRequest.get(`/media/${fileID}/`)
+        return res.data
     },
     {
         onSuccess: () => {
