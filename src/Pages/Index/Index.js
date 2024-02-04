@@ -3,7 +3,7 @@ import './Index.css'
 import { Alert, ButtonGroup, Container, Dropdown, DropdownButton, Table } from 'react-bootstrap'
 import { HiPlus } from "react-icons/hi";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-import { FaTrash  } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import SectionHeader from '../../Components/Modules/SectionHeader/SectionHeader';
 import FileBox from '../../Components/Modules/FileBox/FileBox';
 import { Link } from 'react-router-dom';
@@ -13,10 +13,10 @@ import Swal from 'sweetalert2';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Loader from '../../Components/Modules/Loader/Loader';
 import UploadingLoader from '../../Components/Modules/UploadingLoader/UploadingLoader';
+import apiRequest from '../../Services/Axios/Configs/config';
 export default function Index() {
 
   const queryClient = useQueryClient()
-  const localStorageData = JSON.parse(localStorage.getItem("user"))
 
   // Create Toast Styles 
   const Toast = Swal.mixin({
@@ -33,46 +33,28 @@ export default function Index() {
 
 
   // Get All Folders From Server
-  const { data: folders } = useQuery("folders", () => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/`, {
-      headers: {
-        'Authorization': `Token ${localStorageData.token}`
-      }
-    })
-      .then(res => res.json())
+  const { data: folders } = useQuery("folders", async () => {
+    const res = await apiRequest.get("/folders/")
+    return res.data
+
   })
 
   // Get All Files From Server
-  const { data: files } = useQuery("files", () => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/`, {
-      headers: {
-        'Authorization': `Token ${localStorageData.token}`
-      }
-    })
-      .then(res => res.json())
+  const { data: files } = useQuery("files", async () => {
+    const res = await apiRequest.get("/media/")
+    return res.data
   })
 
   // Get Recent Files
-  const { data: recentFiles } = useQuery("recentFiles", () => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/recent/`, {
-      headers: {
-        'Authorization': `Token ${localStorageData.token}`
-      }
-    })
-      .then(res => res.json())
+  const { data: recentFiles } = useQuery("recentFiles", async () => {
+    const res = await apiRequest.get("/media/recent/")
+    return res.data
   })
 
   // Add New Folders 
   const { mutate: newFolderMutate } = useMutation((folderName) => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Token ${localStorageData.token}`
-      },
-      body: JSON.stringify({
-        title: folderName
-      })
+    apiRequest.post("/folders/", {
+      title: folderName
     })
   },
     {
@@ -99,12 +81,7 @@ export default function Index() {
 
   // Delete Folder
   const { mutate: removeFolderMutate } = useMutation((folderID) => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/${folderID}/`, {
-      method: "DELETE",
-      headers: {
-        'Authorization': `Token ${localStorageData.token}`
-      }
-    })
+    return apiRequest.delete(`/folders/${folderID}/`)
   },
     {
       onSuccess: () => {
@@ -131,44 +108,9 @@ export default function Index() {
   }
 
 
-  // Rename Folder
-  // const updateFolder = async (folderID) => {
-  //   const { value: newFolderName } = await Swal.fire({
-  //     title: "Rename the folder",
-  //     input: "text",
-  //     inputLabel: "Please enter a name:",
-  //     inputPlaceholder: "Enter your folder name"
-  //   });
-  //   if (newFolderName) {
-  //     fetch(`http://fastdrive.pythonanywhere.com/api/folders/${folderID}/`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         'Authorization': `Token ${localStorageData.token}`
-  //       },
-  //       body: JSON.stringify({
-  //         title: newFolderName
-  //       })
-  //     }).then(res => {
-  //       if (res.ok) {
-  //         Toast.fire({
-  //           icon: "success",
-  //           title: "New folder name changed"
-  //         })
-  //       }
-  //     })
-  //   }
-  // }
-
   // Upload File 
   const { mutate: uploadFileMutate, isLoading } = useMutation((formData) => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Token ${localStorageData.token}`
-      },
-      body: formData
-    })
+    return apiRequest.post("/media/", formData)
   },
     {
       onSuccess: () => {
@@ -189,12 +131,7 @@ export default function Index() {
 
   // Delete File
   const { mutate: removeFileMutate } = useMutation((fileID) => {
-    return fetch(`http://fastdrivev2.pythonanywhere.com/api/media/${fileID}/`, {
-      method: "DELETE",
-      headers: {
-        'Authorization': `Token ${localStorageData.token}`
-      }
-    })
+    return apiRequest.delete(`/media/${fileID}`)
   },
     {
       onSuccess: () => {
@@ -273,7 +210,7 @@ export default function Index() {
               <div className=' mb-5'>
                 {
                   folders?.map(folder => (
-                    <div key={folder.id} className=" d-flex justify-content-between align-items-center my-3 ">
+                    <div key={folder.id} className=" d-flex justify-content-between align-items-center my-3 border-bottom  ">
                       <div>
                         <img src="/images/png/folder-icon.png" alt="icon" />
                         <Link to={`/folder-info/${folder.id}`} className=' text-decoration-none '>
@@ -282,7 +219,7 @@ export default function Index() {
                       </div>
                       <div >
                         <DropdownButton variant='none'>
-                          <Dropdown.Item className='d-flex justify-content-center align-items-center text-danger ' onClick={() => removeFolder(folder.id)}><FaTrash  className=' me-1 ' />Delete</Dropdown.Item>
+                          <Dropdown.Item className='d-flex justify-content-center align-items-center text-danger ' onClick={() => removeFolder(folder.id)}><FaTrash className=' me-1 ' />Delete</Dropdown.Item>
                         </DropdownButton>
                       </div>
                     </div>
@@ -290,7 +227,7 @@ export default function Index() {
                 }
                 {
                   files?.map(file => (
-                    <div key={file.id} className=" d-flex justify-content-between align-items-center my-3 ">
+                    <div key={file.id} className=" d-flex justify-content-between align-items-center my-3 border-bottom  ">
                       <div>
                         <img src="/images/png/file-icon.png" alt="icon" />
                         <Link to={`/file-info/${file.id}`} className=' text-decoration-none '>
@@ -299,7 +236,7 @@ export default function Index() {
                       </div>
                       <div>
                         <DropdownButton variant='none'>
-                          <Dropdown.Item  className=' d-flex justify-content-center align-items-center text-danger ' onClick={() => removeFile(file.id)}><FaTrash  className=' me-1 ' />Delete</Dropdown.Item>
+                          <Dropdown.Item className=' d-flex justify-content-center align-items-center text-danger ' onClick={() => removeFile(file.id)}><FaTrash className=' me-1 ' />Delete</Dropdown.Item>
                         </DropdownButton>
                       </div>
                     </div>
