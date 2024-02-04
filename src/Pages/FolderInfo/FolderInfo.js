@@ -7,21 +7,17 @@ import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import apiRequest from '../../Services/Axios/Configs/config'
 
 export default function FolderInfo() {
 
 
     const { folderID } = useParams()
-    const localStorageData = JSON.parse(localStorage.getItem("user"))
 
     // Get Single Folder
-    const { data: folderData } = useQuery("single-folder", () => {
-        return fetch(`http://fastdrivev2.pythonanywhere.com/api/folders/${folderID}/`, {
-            headers: {
-                'Authorization': `Token ${localStorageData.token}`
-            }
-        })
-            .then(res => res.json())
+    const { data: folderData } = useQuery("single-folder", async () => {
+        const res = await apiRequest.get(`/folders/${folderID}/`)
+        return res.data
     })
 
     return (
