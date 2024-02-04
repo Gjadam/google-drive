@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import SearchBox from '../../Modules/SearchBox/SearchBox';
+import apiRequest from '../../../Services/Axios/Configs/config';
 export default function NavBar() {
 
   const [searchValue, setSearchValue] = useState('')
@@ -63,30 +64,30 @@ export default function NavBar() {
       }
     }
 
-    
+
   }, [])
-  
+
   useEffect(() => {
-    if(authContext.isLoggedIn) {
+    if (authContext.isLoggedIn) {
       setIsDisable(false)
     } else {
       setIsDisable(true)
     }
-  } , [authContext.isLoggedIn])
+  }, [authContext.isLoggedIn])
+
+
+  const getSearchData = async () => {
+    const res = await apiRequest.get(`/search/?q=${searchValue}`)
+    setSearchResults(res.data)
+  }
+
 
   useEffect(() => {
     // Get Search Datas from server
     if (searchValue.length > 0) {
-      fetch(`http://fastdrivev2.pythonanywhere.com/api/search/?q=${searchValue}`, {
-        headers: {
-          'Authorization': `Token ${localStorageData.token}`
-        }
-      })
-        .then(res => res.json())
-        .then(searchDatas => setSearchResults(searchDatas))
+      getSearchData()
     }
   }, [searchValue])
-
 
 
   const searchSubmit = (e) => {
@@ -116,7 +117,7 @@ export default function NavBar() {
                     disabled={isDisable}
                   />
                   {
-                    searchResults.length > 0 && 
+                    searchResults.length > 0 &&
                     <div className="searchBox w-100  d-flex flex-column  p-3 ms-2  rounded-2 z-3 shadow-sm bg-light-subtle ">
                       {
                         searchResults.map(searchResult => (
