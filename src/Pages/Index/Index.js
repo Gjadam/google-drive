@@ -48,6 +48,7 @@ export default function Index() {
   // Get Recent Files
   const { data: recentFiles } = useQuery("recentFiles", async () => {
     const res = await apiRequest.get("/media/recent/")
+
     return res.data
   })
 
