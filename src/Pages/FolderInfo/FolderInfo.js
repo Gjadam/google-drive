@@ -13,12 +13,15 @@ export default function FolderInfo() {
 
 
     const { folderID } = useParams()
+    const [folderData, setFolderData] = useState([])
 
     // Get Single Folder
-    const { data: folderData } = useQuery("single-folder", async () => {
-        const res = await apiRequest.get(`/folders/${folderID}/`)
-        return res.data
-    })
+    useEffect(() => {
+        apiRequest.get(`/folders/${folderID}/`)
+            .then(folderData => {
+                setFolderData(folderData.data)
+            })
+    }, [])
 
     return (
         <Container>
