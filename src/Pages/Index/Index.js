@@ -17,7 +17,10 @@ import apiRequest from '../../Services/Axios/Configs/config';
 export default function Index() {
 
   const queryClient = useQueryClient()
-
+  const [recentFiles, setRecentFiles] = useState([])
+  const [folders, setFolders] = useState([])
+  const [files, setFiles] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   // Create Toast Styles 
   const Toast = Swal.mixin({
     toast: true,
@@ -31,42 +34,39 @@ export default function Index() {
     }
   });
 
-
   // Get All Folders From Server
-  const { data: folders } = useQuery("folders", async () => {
-    const res = await apiRequest.get("/folders/")
-    return res.data
+  const getFolders = async () => {
+    apiRequest.get("/folders/")
+      .then(foldersData => {
+        setFolders(foldersData?.data)
+      })
+  }
 
-  })
 
   // Get All Files From Server
-  const { data: files } = useQuery("files", async () => {
-    const res = await apiRequest.get("/media/")
-    return res.data
-  })
+  const getFiles = async () => {
+    apiRequest.get("/media/")
+      .then(filesData => {
+        setFiles(filesData?.data)
+      })
+  }
 
-  // Get Recent Files
-  const { data: recentFiles } = useQuery("recentFiles", async () => {
-    const res = await apiRequest.get("/media/recent/")
+  const getRecentFiles = async () => {
+    apiRequest.get("/media/recent/")
+      .then(recentData => {
+        setRecentFiles(recentData?.data)
+      })
+  }
 
-    return res.data
-  })
+  useEffect(() => {
+    getRecentFiles()
+    getFolders()
+    getFiles()
+  }, [])
+
+
 
   // Add New Folders 
-  const { mutate: newFolderMutate } = useMutation((folderName) => {
-    apiRequest.post("/folders/", {
-      title: folderName
-    })
-  },
-    {
-      onSuccess: () => {
-        Toast.fire({
-          icon: "success",
-          title: "New folder Added."
-        })
-        queryClient.invalidateQueries(["folders"])
-      }
-    })
 
   const addNewFolder = async () => {
     const { value: folderName } = await Swal.fire({
@@ -76,23 +76,22 @@ export default function Index() {
       inputPlaceholder: "Enter your folder name"
     });
     if (folderName) {
-      newFolderMutate(folderName)
+      apiRequest.post("/folders/", {
+        title: folderName
+      })
+        .then(res => {
+          if (res.status === 201) {
+            Toast.fire({
+              icon: "success",
+              title: "New folder Added."
+            })
+            getFolders()
+          }
+        })
     }
   }
 
   // Delete Folder
-  const { mutate: removeFolderMutate } = useMutation((folderID) => {
-    return apiRequest.delete(`/folders/${folderID}/`)
-  },
-    {
-      onSuccess: () => {
-        Toast.fire({
-          icon: "success",
-          title: "Folder deleted successfully."
-        })
-        queryClient.invalidateQueries(["folders"])
-      }
-    })
   const removeFolder = (folderID) => {
     Swal.fire({
       title: "Do you want to delete this folder?",
@@ -103,47 +102,41 @@ export default function Index() {
       confirmButtonText: "Yes!"
     }).then((result) => {
       if (result.isConfirmed) {
-        removeFolderMutate(folderID)
+        apiRequest.delete(`/folders/${folderID}/`)
+          .then(res => {
+            if (res.status === 204) {
+              Toast.fire({
+                icon: "success",
+                title: "Folder deleted successfully."
+              })
+              getFolders()
+            }
+          })
       }
     });
   }
 
 
   // Upload File 
-  const { mutate: uploadFileMutate, isLoading } = useMutation((formData) => {
-    return apiRequest.post("/media/", formData)
-  },
-    {
-      onSuccess: () => {
-        Toast.fire({
-          icon: "success",
-          title: "New file Added."
-        })
-        queryClient.invalidateQueries(["recentFiles"])
-        queryClient.invalidateQueries(["files"])
-      }
-    })
-
   const uploadFile = async (file) => {
+    setIsLoading(true)
     const formData = new FormData()
     formData.append('files', file);
-    uploadFileMutate(formData)
+    apiRequest.post("/media/", formData)
+      .then(res => {
+        if (res.status === 201) {
+          Toast.fire({
+            icon: "success",
+            title: "New file Added."
+          })
+          setIsLoading(false)
+          getFiles()
+          getRecentFiles()
+        }
+      })
   }
 
   // Delete File
-  const { mutate: removeFileMutate } = useMutation((fileID) => {
-    return apiRequest.delete(`/media/${fileID}`)
-  },
-    {
-      onSuccess: () => {
-        Toast.fire({
-          icon: "success",
-          title: "File deleted successfully."
-        })
-        queryClient.invalidateQueries(["recentFiles"])
-        queryClient.invalidateQueries(["files"])
-      }
-    })
   const removeFile = (fileID) => {
     Swal.fire({
       title: "Do you want to delete this file?",
@@ -154,7 +147,17 @@ export default function Index() {
       confirmButtonText: "Yes!"
     }).then((result) => {
       if (result.isConfirmed) {
-        removeFileMutate(fileID)
+        apiRequest.delete(`/media/${fileID}`)
+          .then(res => {
+            if (res.status === 204) {
+              Toast.fire({
+                icon: "success",
+                title: "File deleted successfully."
+              })
+              getFiles()
+              getRecentFiles()
+            }
+          })
       }
     });
   }
