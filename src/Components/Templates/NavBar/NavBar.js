@@ -17,7 +17,6 @@ export default function NavBar() {
   const [flag, setFlag] = useState(true)
   const authContext = useContext(AuthContext)
   const navigate = useNavigate()
-  const localStorageData = JSON.parse(localStorage.getItem("user"))
 
   const logOut = () => {
     Swal.fire({
