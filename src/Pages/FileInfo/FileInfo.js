@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Container, Image } from 'react-bootstrap'
 import './FileInfo.css'
 import NavBar from '../../Components/Templates/NavBar/NavBar'
@@ -9,45 +9,43 @@ import Loader from '../../Components/Modules/Loader/Loader'
 import { useQuery } from 'react-query'
 import apiRequest from '../../Services/Axios/Configs/config'
 export default function FileInfo() {
-    
-    
+
+
     const [fileImage, setFileImage] = useState("")
     const [isLoading, setIsLoading] = useState(true)
+    const [fileData, setFileData] = useState([])
     const { fileID } = useParams()
 
     // Get Single File
-    const { data: fileData } = useQuery(["single-file", fileID], async () => {
-        const res = await apiRequest.get(`/media/${fileID}/`)
-        return res.data
-    },
-    {
-        onSuccess: () => {
-            setIsLoading(false)
-        }
-    })
-
+    useEffect(() => {
+        apiRequest.get(`/media/${fileID}/`)
+            .then(fileDatas => {
+                setFileData(fileDatas.data)
+                setIsLoading(false)
+            })
+    }, [])
 
 
     useEffect(() => {
-  
-      switch (fileData?.file_format) {
-        case "pdf":
-          setFileImage(<img src='/images/jpg/pdf-image.jpeg' className=' w-100  rounded-5  ' alt="image" />)
-          break
-        case "jpg":
-          setFileImage(<img src={fileData?.file} className=' w-100 rounded-5' alt="image" />)
-          break
-        case "svg":
-          setFileImage(<img src={fileData?.file} className=' w-100 rounded-5 ' alt="image" />)
-          break
-        case "png":
-          setFileImage(<img src={fileData?.file} className=' w-100 rounded-5 ' alt="image" />)
-          break
-        case "mp4":
-          setFileImage(<img src='/images/jpg/video-image.jpg' className=' w-100 rounded-5   ' alt="image" />)
-          break
-      }
-})
+
+        switch (fileData?.file_format) {
+            case "pdf":
+                setFileImage(<img src='/images/jpg/pdf-image.jpeg' className=' w-100  rounded-5  ' alt="image" />)
+                break
+            case "jpg":
+                setFileImage(<img src={fileData?.file} className=' w-100 rounded-5' alt="image" />)
+                break
+            case "svg":
+                setFileImage(<img src={fileData?.file} className=' w-100 rounded-5 ' alt="image" />)
+                break
+            case "png":
+                setFileImage(<img src={fileData?.file} className=' w-100 rounded-5 ' alt="image" />)
+                break
+            case "mp4":
+                setFileImage(<img src='/images/jpg/video-image.jpg' className=' w-100 rounded-5   ' alt="image" />)
+                break
+        }
+    })
 
     return (
         <Container >
